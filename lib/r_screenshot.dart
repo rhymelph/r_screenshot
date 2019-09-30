@@ -123,6 +123,7 @@ class LongScreenShotController extends ScrollController {
     ui.PictureRecorder recorder;
     Paint paint;
     void _init() {
+      recorder = ui.PictureRecorder();
       canvas = ui.Canvas(recorder);
       fullHeight = (maxScroll + viewPort) * _pixelRatio;
       fullWidth = (singleController._key.currentContext.findRenderObject()
