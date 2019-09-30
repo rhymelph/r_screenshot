@@ -118,7 +118,7 @@ class LongScreenShotController extends ScrollController {
       }
       return;
     }
-    double fullHeight, fullWidth, lastPosition;
+    double fullHeight, fullWidth,lastPosition;
     ui.Canvas canvas;
     ui.PictureRecorder recorder;
     Paint paint;
@@ -138,6 +138,7 @@ class LongScreenShotController extends ScrollController {
         ..isAntiAlias = true
         ..blendMode = BlendMode.dstATop
         ..filterQuality = FilterQuality.low;
+      lastPosition=0;
     }
 
     _init();
