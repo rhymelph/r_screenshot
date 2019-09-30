@@ -109,12 +109,12 @@ class LongScreenShotController extends ScrollController {
   void startCaptureImage({double pixelRatio}) async {
     double maxScroll = position.maxScrollExtent; //max scroll distance
     double viewPort = position.viewportDimension; //screen distance
-    double _pixelRatio = pixelRatio ?? ui.window.devicePixelRatio;
+    double mPixelRatio = pixelRatio ?? ui.window.devicePixelRatio;
     if (maxScroll == 0.0) {
       //no max scroll and content not full screen
       if (imageCallBack != null) {
         imageCallBack(
-            await singleController.captureImage(pixelRatio: _pixelRatio));
+            await singleController.captureImage(pixelRatio: mPixelRatio));
       }
       return;
     }
@@ -125,12 +125,12 @@ class LongScreenShotController extends ScrollController {
     void _init() {
       recorder = ui.PictureRecorder();
       canvas = ui.Canvas(recorder);
-      fullHeight = (maxScroll + viewPort) * _pixelRatio;
+      fullHeight = (maxScroll + viewPort) * mPixelRatio;
       fullWidth = (singleController._key.currentContext.findRenderObject()
                   as RenderRepaintBoundary)
               .size
               .width *
-          _pixelRatio;
+          mPixelRatio;
       paint = Paint()
         ..color = Color(0xFFFFFFFF)
         ..strokeCap = StrokeCap.round
@@ -149,8 +149,8 @@ class LongScreenShotController extends ScrollController {
           position.pixels - lastPosition > 300) {
         lastPosition = position.pixels;
         ui.Image image =
-            await singleController.captureImage(pixelRatio: _pixelRatio);
-        canvas.drawImage(image, Offset(0.0, lastPosition * _pixelRatio), paint);
+            await singleController.captureImage(pixelRatio: mPixelRatio);
+        canvas.drawImage(image, Offset(0.0, lastPosition * mPixelRatio), paint);
         if (position.pixels == position.maxScrollExtent) {
           if (imageCallBack != null) {
             imageCallBack(await recorder
