@@ -149,8 +149,8 @@ class LongScreenShotController extends ScrollController {
           position.pixels - lastPosition > 300) {
         lastPosition = position.pixels;
         ui.Image image =
-            await singleController.captureImage(pixelRatio: pixelRatio);
-        canvas.drawImage(image, Offset(0.0, lastPosition * pixelRatio), paint);
+            await singleController.captureImage(pixelRatio: _pixelRatio);
+        canvas.drawImage(image, Offset(0.0, lastPosition * _pixelRatio), paint);
         if (position.pixels == position.maxScrollExtent) {
           if (imageCallBack != null) {
             imageCallBack(await recorder
