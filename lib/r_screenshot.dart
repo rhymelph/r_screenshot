@@ -140,29 +140,28 @@ class LongScreenShotController extends ScrollController {
         ..filterQuality = FilterQuality.low;
       lastPosition=0;
     }
-
     _init();
 
-    void _record() async {
-      if (position.pixels == position.maxScrollExtent ||
-          lastPosition == 0 ||
-          position.pixels - lastPosition > 300) {
-        lastPosition = position.pixels;
-        ui.Image image =
-            await singleController.captureImage(pixelRatio: mPixelRatio);
-        canvas.drawImage(image, Offset(0.0, lastPosition * mPixelRatio), paint);
-        if (position.pixels == position.maxScrollExtent) {
-          if (imageCallBack != null) {
-            imageCallBack(await recorder
-                .endRecording()
-                .toImage(fullWidth.toInt(), fullHeight.toInt()));
+    _listener = () {
+      void _record() async {
+        double mPixelRatio=pixelRatio??ui.window.devicePixelRatio;
+        if (position.pixels == position.maxScrollExtent ||
+            lastPosition == 0 ||
+            position.pixels - lastPosition > 300) {
+          lastPosition = position.pixels;
+          ui.Image image =
+          await singleController.captureImage(pixelRatio: mPixelRatio);
+          canvas.drawImage(image, Offset(0.0, lastPosition * mPixelRatio), paint);
+          if (position.pixels == position.maxScrollExtent) {
+            if (imageCallBack != null) {
+              imageCallBack(await recorder
+                  .endRecording()
+                  .toImage(fullWidth.toInt(), fullHeight.toInt()));
+            }
+            removeListener(_listener);
           }
-          removeListener(_listener);
         }
       }
-    }
-
-    _listener = () {
       _record();
     };
 
