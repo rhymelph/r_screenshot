@@ -1,5 +1,6 @@
 library r_screenshot;
 
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -31,6 +32,18 @@ class SingleScreenShotController {
     RenderRepaintBoundary boundary = _key.currentContext.findRenderObject();
     return await boundary.toImage(
         pixelRatio: pixelRatio ?? ui.window.devicePixelRatio);
+  }
+
+  // capture the child to image
+  Future<File> captureFile(String path,{ui.ImageByteFormat format = ui.ImageByteFormat.rawRgba,double pixelRatio}) async {
+    final image=await captureImage(pixelRatio: pixelRatio);
+    final byteData=await image.toByteData(format:format);
+    File file=File(path);
+    if(await file.exists()){
+      file.createSync(recursive: true);
+    }
+    file=await file.writeAsBytes(byteData.buffer.asUint8List(),flush: true);
+    return file;
   }
 }
 
