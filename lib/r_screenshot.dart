@@ -80,6 +80,8 @@ class ScreenShotListView extends StatelessWidget {
     return LongScreenShot(
       controller: controller,
       child: ListView(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
         controller: controller,
         children: children,
       ),
@@ -103,6 +105,7 @@ class ScreenShotCustomScrollView extends StatelessWidget {
       controller: controller,
       child: CustomScrollView(
         controller: controller,
+        shrinkWrap: true,
         slivers: slivers,
       ),
     );
